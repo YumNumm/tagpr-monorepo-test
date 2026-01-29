@@ -1,0 +1,32 @@
+name: tagpr
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tagpr:
+    runs-on: ubuntu-slim
+    timeout-minutes: 1
+    strategy:
+      matrix:
+        module:
+          - frontend
+          - backend
+    permissions:
+      contents: write
+      id-token: write
+      pull-requests: write
+    steps:
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+
+      - id: tagpr
+        uses: Songmu/tagpr@39bf0bcd1f7ba113b93eb491864ab8df471ad1d6 # v1.14.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAGPR_TAG_PREFIX: ${{ matrix.module }}
+          TAGPR_CONFIG_FILE: ${{ matrix.module }}/.tagpr

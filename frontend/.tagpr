@@ -1,0 +1,6 @@
+# https://github.com/Songmu/tagpr
+[tagpr]
+    vPrefix = true
+    releaseBranch = main
+    tagPrefix = frontend
+    versionFile = -
